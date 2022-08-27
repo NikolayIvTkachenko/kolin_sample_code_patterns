@@ -1,16 +1,14 @@
 package kotlin_block.kotlin_coroutines_examples_02
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 //AppDemoCoroutineSample001
 
 fun main() {
     //exampleBlocking()
     //exampleBlockingV2()
-    exampleBlockingDispatcher()
-
+    //exampleBlockingDispatcher()
+    exampleGlobalLaunch()
 
 
 }
@@ -40,4 +38,13 @@ fun exampleBlockingDispatcher() {
         printDelayed("two - from thread ${Thread.currentThread().name}")
     }
     println("three - from thread ${Thread.currentThread().name}")
+}
+
+fun exampleGlobalLaunch() = runBlocking {
+    println("one - from thread ${Thread.currentThread().name}")
+    val job = GlobalScope.launch{
+        printDelayed("two - from thread ${Thread.currentThread().name}")
+    }
+    println("three - from thread ${Thread.currentThread().name}")
+    job.join()
 }
