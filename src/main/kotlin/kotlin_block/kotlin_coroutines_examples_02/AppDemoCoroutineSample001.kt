@@ -14,6 +14,9 @@ fun main() {
     //exampleLaunchScope()
     //exampleLaunchScopeV2()
 
+    //exampleAsyncAwait()
+    exampleAsyncAwaitV2()
+
 }
 
 suspend fun printDelayed(message: String) {
@@ -74,11 +77,48 @@ fun exampleLaunchScopeV2() = runBlocking {
 
 }
 
+fun exampleAsyncAwait() = runBlocking {
+    //val deferred1 = async { calculateHardThings(10) }.await()
+    val startTime = System.currentTimeMillis()
+
+    val deferred1 = async { calculateHardThings(10) }
+    val deferred2 = async { calculateHardThings(20) }
+    val deferred3 = async { calculateHardThings(30) }
+
+    val sum = deferred1.await() + deferred2.await() + deferred3.await()
+
+    println("async/await result = $sum")
+
+
+    val endTime = System.currentTimeMillis()
+    println("Time taken: ${endTime - startTime }")
+
+}
+
+fun exampleAsyncAwaitV2() = runBlocking {
+    //val deferred1 = async { calculateHardThings(10) }.await()
+    val startTime = System.currentTimeMillis()
+
+    val deferred1 = async { calculateHardThings(10) }.await()
+    val deferred2 = async { calculateHardThings(20) }.await()
+    val deferred3 = async { calculateHardThings(30) }.await()
+
+    val sum = deferred1 + deferred2+ deferred3
+
+    println("async/await result = $sum")
+
+
+    val endTime = System.currentTimeMillis()
+    println("Time taken: ${endTime - startTime }")
+
+}
 
 
 
 
-
-
+suspend fun calculateHardThings(startNum: Int): Int {
+    delay(1000)
+    return startNum * 10
+}
 
 
