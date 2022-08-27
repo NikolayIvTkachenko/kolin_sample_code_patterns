@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit
 
 fun main() {
 
+    //https://betterprogramming.pub/rxjava-different-ways-of-creating-observables-7ec3204f1e23
+
     //Batching
     println("Batching")
 //    val latch = CountDownLatch(1)
