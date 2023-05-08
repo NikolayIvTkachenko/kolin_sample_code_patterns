@@ -1,5 +1,6 @@
 package kotlin_block.kotlin_base
 
+import kotlin.random.Random
 
 
 fun main() {
@@ -7,7 +8,20 @@ fun main() {
     //testMapFilter()
     //testRun01()
     //testRun02()
-    testRun03()
+    //testRun03()
+    //testApplay01()
+
+    //testAlso()
+    //testTakeIf()
+    //testTakeIf02()
+    //testTakeIf03()
+
+    //testWith()
+    //testWith02()
+    //testRun04()
+    //testRun05()
+    testLet()
+
 }
 
 private fun testMapFilter(){
@@ -61,6 +75,25 @@ private fun testRun03(){
     //ServiceNetwork(name='http://rs-enginaring.com', port=9090, query=code = 5)
 }
 
+private fun testRun04(){
+    val numbers = mutableListOf("one", "two", "three")
+    val firstAndLast = numbers.run {
+        "The first element is ${first()}," +
+                " the last element is ${last()}"
+        //"hello"
+    }
+    println(firstAndLast)
+}
+
+private fun testRun05(){
+    val numbers = mutableListOf("one", "two", "three")
+    val firstAndLast = run {
+        "hello"
+    }
+    println(firstAndLast)
+}
+
+
 private data class ServiceNetwork(val name: String) {
     var port: String? = null
     var query: String? = null
@@ -68,6 +101,92 @@ private data class ServiceNetwork(val name: String) {
     override fun toString(): String {
         return "ServiceNetwork(name='$name', port=$port, query=$query)"
     }
+}
+
+private fun testApplay01(){
+    val adam01 = PersonTest("Adam").apply {
+        age = 32
+        city = "London"
+    }
+    println(adam01)
+    //PersonTest(name='Adam', age=32, city=London)
+
+    val adam02 = PersonTest("Adam").apply {
+        age = 32
+        city = "London"
+        println(this)
+    }
+    println(adam02)
+    //PersonTest(name='Adam', age=32, city=London)
+    //PersonTest(name='Adam', age=32, city=London)
+}
+
+private data class PersonTest(val name: String){
+    var age: Int? = null
+    var city: String? = null
+    override fun toString(): String {
+        return "PersonTest(name='$name', age=$age, city=$city)"
+    }
 
 
+}
+
+private fun testAlso(){
+    val numbers = mutableListOf("one", "two", "three")
+    numbers
+        .also { println("The list elements before adding new one: $it") }
+        .add("four")
+    println(numbers)
+}
+
+private fun testTakeIf(){
+    //
+
+    val number = Random.nextInt(100)
+    println("number: $number")
+
+    val evenOrNull = number.takeIf { it % 2 == 0 }
+    val oddOrNull = number.takeUnless { it % 2 == 0 }
+    println("even: $evenOrNull, odd: $oddOrNull")
+
+}
+
+private fun testTakeIf02(){
+    val str = "Hello"
+    val caps = str.takeIf { it.isNotEmpty() }?.uppercase()
+    //val caps = str.takeIf { it.isNotEmpty() }.uppercase() //compilation error
+    println(caps)
+}
+
+private fun testTakeIf03(){
+    val str = "Hello"
+    //val caps = str.takeIf { it.isNotEmpty() }?.uppercase()
+    val caps = str.takeUnless { it.isNotEmpty() }?.uppercase()
+    println(caps)
+}
+
+private fun testWith() {
+    val numbers = mutableListOf("one", "two", "three")
+    with(numbers) {
+        println("'with' is called with argument $this")
+        println("It contains $size elements")
+    }
+}
+
+private fun testWith02(){
+    val numbers = mutableListOf("one", "two", "three")
+    val firstAndLast = with(numbers) {
+        "The first element is ${first()}," +
+                " the last element is ${last()}"
+        //"hello"
+    }
+    println(firstAndLast)
+}
+
+private fun testLet(){
+    val str: String? = "Hello"
+    val length = str?.let {
+        println("let() called on $it")
+        it.length
+    }
 }
